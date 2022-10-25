@@ -2,20 +2,21 @@ package html
 
 import (
 	"io"
-	"log"
 
 	"golang.org/x/net/html"
 
 	"quizer/model"
 )
 
-func Parse(rsp io.Reader, inputs *[]model.Input) {
+func Parse(rsp io.Reader, inputs *[]model.Input) error {
 	doc, err := html.Parse(rsp)
 	if err != nil {
-		log.Fatalln("завалился парсинг ответа")
+		return err
 	}
 
 	traverse(doc, inputs)
+
+	return nil
 }
 
 func traverse(doc *html.Node, inputs *[]model.Input) {
